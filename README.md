@@ -1,8 +1,7 @@
 ## Roadmap:
-* Format log
-* Reading the config file
-* Error if config cannot read
-* Write in and out file
+* Read in CSV file
+* Write out CSV file
+* Add Excel and JSON
 * Start writing different steps here
 * Write code for steps 
 * Add verbose option

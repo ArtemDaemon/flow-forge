@@ -10,11 +10,9 @@ import (
 
 type Config struct {
 	Input struct {
-		File string `yaml: "file"`
-		Type string `yaml: "type"`
-	} `yaml: "input"`
-	Pipeline struct{} `yaml: "pipeline"`
-	Output   struct{} `yaml: "output"`
+		File string `yaml:"file"`
+		Type string `yaml:"type"`
+	} `yaml:"input"`
 }
 
 func Run(configPath string) error {
@@ -26,12 +24,12 @@ func Run(configPath string) error {
 		return err
 	}
 
+	log.Println("Start parsing YAML config...")
 	err = yaml.Unmarshal(configFile, &config)
 	if err != nil {
 		return err
 	}
 
 	fmt.Println("🚀 Starting FlowForge pipeline...")
-	fmt.Printf("📁 Using config: %s\n", configPath)
 	return nil
 }
