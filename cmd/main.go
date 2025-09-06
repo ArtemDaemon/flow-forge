@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"flow-forge/internal/pipeline"
+	"flow-forge/internal/config"
 	"log"
 	"os"
 )
@@ -22,7 +22,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := pipeline.Run(configPath); err != nil {
+	_, err := config.ParseConfigFile(configPath)
+	if err != nil {
 		log.Fatal(err)
 	}
 }
