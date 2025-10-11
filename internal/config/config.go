@@ -15,27 +15,30 @@ type Config struct {
 	} `yaml:"input"`
 }
 
-func ParseConfigFile(configPath string) (*Config, error) {
-	var config Config
+func ParseConfigFile(path string) (*Config, error) {
+	var c Config
 
 	log.Println("Start reading config file...")
-	configFile, err := os.ReadFile(configPath)
+	f, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 
 	log.Println("Start parsing YAML config...")
-	err = yaml.Unmarshal(configFile, &config)
+	err = yaml.Unmarshal(f, &c)
 	if err != nil {
 		return nil, err
 	}
 
-	if config.Input.File == "" {
+	if c.Input.File == "" {
 		return nil, fmt.Errorf("parsing config error: 'input.file' field is required")
 	}
-	if config.Input.Type == "" {
+	if c.Input.Type == "" {
 		return nil, fmt.Errorf("parsing config error: 'input.type' field is required")
 	}
+	if c.Input.Type != "csv" {
+		return nil, fmt.Errorf("parsing config error: 'input.type' field must have value 'csv'")
+	}
 
-	return &config, nil
+	return &c, nil
 }

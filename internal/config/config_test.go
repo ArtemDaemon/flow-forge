@@ -59,6 +59,19 @@ input:
 	}
 }
 
+func TestParseConfigFile_WrongTypeFieldValue(t *testing.T) {
+	yamlContent := `
+input:
+  file: "input.txt"
+  type: "excel"
+`
+	file := writeTempConfigFile(t, yamlContent)
+	_, err := ParseConfigFile(file)
+	if err == nil || err.Error() != "parsing config error: 'input.type' field must have value 'csv'" {
+		t.Fatalf("expected error about wrong 'input.type' value, got: %v", err)
+	}
+}
+
 func TestParseConfigFile_FileDoesNotExist(t *testing.T) {
 	_, err := ParseConfigFile("nonexistent.yaml")
 	if err == nil {
